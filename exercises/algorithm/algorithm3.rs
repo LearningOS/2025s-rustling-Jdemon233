@@ -3,10 +3,38 @@
 	This problem requires you to implement a sorting algorithm
 	you can use bubble sorting, insertion sorting, heap sorting, etc.
 */
-// I AM NOT DONE
 
-fn sort<T>(array: &mut [T]){
+fn sort<T>(array: &mut [T])
+where T:Ord+Clone,{
 	//TODO
+    q_sort(array);
+}
+fn partition<T>(array: &mut [T]) -> usize
+where T:Ord+Clone,
+{
+    let pivot = array[0].clone();
+    // 8,4,9,5,7,9
+    let mut i = 0;
+    for j in 1..array.len(){
+        if array[j] < pivot{
+            i += 1;
+            array.swap(i,j)
+        }
+    }
+    array.swap(0,i);
+    i
+
+}
+fn q_sort<T>(array: &mut [T])
+where T:Ord+Clone,{
+    if array.len()<=1{
+        return;
+    }
+
+    let pivot_i = partition(array);
+    q_sort(&mut array[0..pivot_i]);
+    q_sort(&mut array[pivot_i+1..]);
+
 }
 #[cfg(test)]
 mod tests {
